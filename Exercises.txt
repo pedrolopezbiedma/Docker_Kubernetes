@@ -1,0 +1,32 @@
+Exercises
+
+# Create a project (simple-web) with the following package.json
+{
+	"dependencies": {
+		"express": "*"
+	},
+	"scripts": {
+		"start": "node index.js"
+	}
+}
+
+and the following index.js
+const express = require("express");
+
+const app = express();
+
+app.get("/", (req, res) => {
+	res.send("Hello World mate <3");
+});
+
+app.listen(8080, () => {
+	console.log("Server is running on port 8080");
+});
+
+- Test that everything is working
+- Create the base image to run this -> Check what happens
+- Solve the problem with the base image -> Check what happens now
+- Solve the problem with the missing files -> Check what happens now
+- Solve the problem with the ports -> Check what happens now
+- Ensure that your app is working in a separated directory
+- Ensure you have no unnecesary installing the dependencies when you change source files
