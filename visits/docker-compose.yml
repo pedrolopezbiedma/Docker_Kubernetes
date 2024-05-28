@@ -1,0 +1,10 @@
+version: '3'
+
+# Containers that we need.
+services:
+  redis-server:
+    image: 'redis'
+  node-app:
+    build: .
+    ports:
+      - "4200:4200"
