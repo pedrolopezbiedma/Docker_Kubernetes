@@ -1,13 +1,15 @@
-### Specify the base image ###
+### Base image ###
 FROM node:14-alpine
 
-### Specify what needs to happen ###
+### What needs to happen to build the image ###
+# Specify the working directory
+WORKDIR /usr/apps/simple-web
 
 # Copy the files into the image
-COPY /. /.
+COPY ./ ./
 
 # Install the dependencies
 RUN npm install
 
-### Specify the command to run once the container is already started ###
+### Command to run once the container is already started ###
 CMD ["npm", "start"]
