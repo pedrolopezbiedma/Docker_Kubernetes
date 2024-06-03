@@ -1,3 +1,5 @@
 --------------------------- Module 6 -----------------------------
 
 - Arreglar notas de Docker
+    - Create a react app called frontend
+    - 
