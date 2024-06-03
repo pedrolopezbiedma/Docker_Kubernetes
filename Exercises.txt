@@ -2,4 +2,46 @@
 
 - Arreglar notas de Docker
     - Create a react app called frontend
-    - 
+    - Create now the Dockerfile.dev, inside a Docker folder  ( !!!! note the .dev and write about this )
+        - Create the Docker file for dev ( use the node:16-alpine ) to run the app.
+        - Include notes about docker build -f Dockerfile.dev .
+        - And try it, you'll see an error about the port
+        - Now, solve it :D
+        - Check how changes are not reflected
+        - We are going to solve this with Docker volumes
+            - Docker run -p 3000:3000 -v /app/node_modules -v $(pwd):/app <image_id> --> Notion notes about this, although we should not need to add the first -v as we do have node_modules ( note about this too )
+            - Try that this is working
+        
+    - Now, lets move to Docker compose
+        - Create the docker-compose.yml
+            - Specify the service react-app
+            - Specify the build
+            - Specify the ports
+            - Specify the volumes:
+                - /app/node_modules
+                - .:/app
+        - This will fail because of the build, as we are not indicating the Dockerfile.dev
+            - Add to the build
+                context: . ( folder where docker needs to search )
+                dockerfile: Dockerfile.dev
+        - Is there something to remove from anywhere? If so, leave a note about why do you leave it / remove it
+        
+    - Now, lets try to run the tests within the docker container
+        - Try it. ( did you do it correctly from the beginning? If so, well done ;), If not, include what you know
+        
+
+    - But, tests are not being updated whenever we update them. We can solve this in two ways
+        - We can start our container, then attach to it and run the tests --> Try this & try that it gets updated
+        - But the 'good' approach would be to update our docker-compose to handle this.
+            - Second service in docker-compose
+                - tests:
+                    - copying the previous one but without the ports as we don't need it
+                    - Add command: ["npm", "run", "test"]
+
+    - Lets now go for the production version of out app
+        - We need to build a Dockerfile for production but we are going to have 2 phases in that dockerfile: Build ( To install dependencies y do the build using one base image ) & Run ( by specifying another build image and run our project )
+            -  Get the configuration for the build phase: Base image node:16-alpine and tag is as builder + copy package.json + install dependencies + run build, take care with this last one
+            -  Second block for the build phase
+                - FROM nginx, then copy whats in the build folder into ./ ( COPY --from=builder /app/build to specify that we want to copy something from the builder phase /usr/share/nxing/html because of nginx documentation)
+                - No command to run since Nginx will autostart
+            - Test this ( 4200:80 ( base nginx port) )
