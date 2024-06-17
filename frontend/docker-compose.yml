@@ -1,0 +1,15 @@
+
+version: '3'
+
+# Containers for our application
+services:
+  #Frontend container
+  react-app:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile.dev
+    ports:
+      - "4200:3000"
+    volumes:
+      - /app/node_modules
+      - .:/usr/apps/frontend
