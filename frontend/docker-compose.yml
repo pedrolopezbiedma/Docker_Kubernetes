@@ -13,3 +13,12 @@ services:
     volumes:
       - /app/node_modules
       - .:/usr/apps/frontend
+  #Tests container
+  react-test:
+    build:
+      context: .
+      dockerfile: Docker/Dockerfile.dev
+    volumes:
+      - /app/node_modules
+      - .:/usr/apps/frontend
+    command: ["npm", "run", "test"]
